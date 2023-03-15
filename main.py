@@ -10,14 +10,14 @@ def help(message: telebot.types.Message):
     markup = get_keyboard()
     text = 'Чтобы начать работу введите команду, в следующем формате: \n <имя валюты>  \
 <в какую валюту перевести> \
-<количество>\n Увидеть список всех доступных валют: /values'
+<количество>\n. Увидеть список всех доступных валют: /values'
     bot.reply_to(message, text, reply_markup=markup)
 
 
 @bot.message_handler(commands=['values'])
 def values(message):
     markup = get_keyboard()
-    text = 'Доступные валюты'
+    text = 'Доступные валюты:'
     for key in keys_v.keys():
         text = '\n'.join((text, key,))
     bot.reply_to(message, text, reply_markup=markup)
@@ -29,14 +29,14 @@ def convert_v(message):
     try:
         value = message.text.split(' ')
         if len(value) != 3:
-            raise ConvertionException('Введите 3 параметра')
+            raise ConvertionException('Введите 3 параметра!')
         # вал1 вал2 количество
         quote, base, amount = value
         total_base = Converter.get_prise(quote, base, amount)
     except ConvertionException as e:
-        bot.reply_to(message, f'Ошибка пользователя. \n{e}')
+        bot.reply_to(message, f'Ошибка пользователя! \n{e}')
     except Exception as e:
-        bot.reply_to(message, f'Не удалось обработать команду\n{e}')
+        bot.reply_to(message, f'Не удалось обработать команду!\n{e}')
         # выводим пользователю
     else:
         text = f'Цена {amount} {quote} = {total_base} {base}'
