@@ -5,7 +5,7 @@ from extensions import Converter, ConvertionException, get_keyboard
 
 bot = telebot.TeleBot(TOKEN)
 
-@bot.message_handler(commands=['start', 'help'])
+@bot.message_handler(commands=['start', 'help']) #выводим описание работы бота
 def help(message: telebot.types.Message):
     markup = get_keyboard()
     text = 'Чтобы начать работу введите команду, в следующем формате: \n <имя валюты>  \
@@ -14,7 +14,7 @@ def help(message: telebot.types.Message):
     bot.reply_to(message, text, reply_markup=markup)
 
 
-@bot.message_handler(commands=['values'])
+@bot.message_handler(commands=['values']) # список доступных валют
 def values(message):
     markup = get_keyboard()
     text = 'Доступные валюты:'
@@ -23,7 +23,7 @@ def values(message):
     bot.reply_to(message, text, reply_markup=markup)
 
 
-@bot.message_handler(content_types=['text'])
+@bot.message_handler(content_types=['text']) # конвертация валют
 def convert_v(message):
     markup = get_keyboard()
     try:
