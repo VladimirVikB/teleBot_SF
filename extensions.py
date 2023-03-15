@@ -1,6 +1,14 @@
 import json
 import requests
 from config import keys_v
+from telebot import types
+
+def get_keyboard():
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2, one_time_keyboard=False)
+    help = types.KeyboardButton('/help')
+    values = types.KeyboardButton('/values')
+    markup.add(help, values)
+    return markup
 
 class ConvertionException(Exception):
     pass
@@ -27,5 +35,5 @@ class Converter:
         # получаем курс через АРI
         r = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym={quote_mark}&tsyms={base_mark}')
         # множим курс на количество и сохраняем курс в переменную
-        total = (json.loads(r.content)[keys_v[base]]) * amount
+        total = round(((json.loads(r.content)[keys_v[base]]) * amount), 4)
         return total
