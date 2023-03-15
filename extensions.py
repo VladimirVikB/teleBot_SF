@@ -21,12 +21,12 @@ class Converter: # конвертируем валюты
             raise ConvertionException(f'{quote}, введен дважды. Для конвертации введите разные валюты!')
 
         try:
-            quote_mark = keys_v[quote]
+            quote_mark = keys_v[quote.lower()]
         except KeyError:
             raise ConvertionException(f'Введенная валюта {quote} не обрабатывается!')
 
         try:
-            base_mark = keys_v[base]
+            base_mark = keys_v[base.lower()]
         except KeyError:
             raise ConvertionException(f'Введенная валюта {base} не обрабатывается!')
 
