@@ -26,6 +26,7 @@ def values(message):
 @bot.message_handler(content_types=['text']) # конвертация валют
 def convert_v(message):
     markup = get_keyboard()
+
     try:
         value = message.text.split(' ')
         if len(value) != 3:
@@ -33,11 +34,13 @@ def convert_v(message):
         # вал1 вал2 количество
         quote, base, amount = value
         total_base = Converter.get_prise(quote, base, amount)
+
     except ConvertionException as e:
         bot.reply_to(message, f'Ошибка пользователя! \n{e}')
     except Exception as e:
         bot.reply_to(message, f'Не удалось обработать команду!\n{e}')
         # выводим пользователю
+
     else:
         text = f'Цена {amount} {quote} = {total_base} {base}'
         bot.send_message(message.chat.id, text, reply_markup=markup)
